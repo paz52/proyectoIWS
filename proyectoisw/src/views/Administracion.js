@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Administracion.css';
 import ScrollToTop from "react-scroll-up";
+
 import fondo from './fondomaterial.jpg';
 //target="_blank" rel="noopener noreferrer" Para abrir link de manera segura en nueva pestaña
 //lead
@@ -286,8 +287,36 @@ export default class Material extends Component{
 						</div>	
 					</div>
 					<div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        2
-                    </div>
+						<div className="container">
+								<div className="row">
+									<div className="col-lg-2 ">
+										<div className="nav flex-column nav-pills nav-material2 stiky-list" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+											<a className="link-material nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Asignar Paciente</a>
+											<a className="link-material nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Ver Asignaciones</a>
+											<a className="link-material nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Ver Salas</a>
+											<a className="link-material nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Asignar Personal</a>
+										</div>
+									</div>
+									<div className="col-lg-10" style={{paddingTop:"30px",paddingBottom:"30px"}}>
+										<div className="tab-content" id="v-pills-tabContent">
+											<div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+												
+											</div>
+											<div className="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+											
+											</div>
+											<div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+												<Recomendaciones />
+											</div>
+											
+											<div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+												<Actividades />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
                     <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                         3
                     </div>

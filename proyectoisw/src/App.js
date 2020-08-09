@@ -67,12 +67,6 @@ class App extends Component {
           </Switch>
         </div>
 
-
-
-
-
-
-       
       </Router>
     </React.Fragment>
   );
