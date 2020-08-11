@@ -222,7 +222,7 @@ class IngresarNuevo extends Component {
 			programa_salud: this.state.programa_salud,
 			estado: this.state.estado,
 			fecha_nacimiento: diaFixed+'/'+this.state.mes+'/'+this.state.anio, 
-			formato_fecha : "dd/mm/yyyy"
+			formato_fecha : "dd/MM/yyyy"
 		};
 		pacienteService.ingresar(data);
 		alert("Paciente ingresado exitosamente.");
@@ -350,7 +350,7 @@ class IngresarNuevo extends Component {
 							</select>
 						</div>
 					</div>
-					<button type="button" onClick={this.handleClick} className="btn btn-primary btn-rounded"><i className="far fa-paper-plane icono"></i> Ingresar Paciente</button>
+					<button type="button" onClick={this.handleClick} className="btn btn-primary btn-rounded"><i class="fas fa-user-plus icono"></i> Ingresar Paciente</button>
 				</form>
 			</>
 		)
@@ -412,7 +412,8 @@ class BuscarPaciente extends Component {
 					estado: "",
 					fecha_ingreso: "",
 					diagnostico: "",
-					programa_salud: ""
+					programa_salud: "",
+					id: ""
 				});
 			};
 		});
@@ -428,7 +429,7 @@ class BuscarPaciente extends Component {
 							<div className="form-group row">
 								<label for="colFormLabel" className="col-auto col-form-label">Ingrese ID del paciente</label>
 								<div className="col-auto">
-									<input type="text" onChange={this.handleChange} className="form-control" id="inputID"></input>
+									<input type="text" value={this.state.id} onChange={this.handleChange} className="form-control" id="inputID"></input>
 								</div>
 							</div>
 						</div>
@@ -633,7 +634,7 @@ class ActualizarPaciente extends Component {
 			diagnostico: this.state.diagnostico,
 			programa_salud: this.state.programa_salud,
 			fecha_nacimiento: diaFixed+'/'+this.state.mes+'/'+this.state.anio, 
-			formato_fecha : "dd/mm/yyyy"
+			formato_fecha : "dd/MM/yyyy"
 		};
 		pacienteService.actualizarDatos(data, parseInt(this.state.id));
 		alert("Paciente actualizado exitosamente.");
@@ -659,7 +660,7 @@ class ActualizarPaciente extends Component {
 		pacienteService.eliminar(parseInt(this.state.id));
 		alert("Paciente eliminado exitosamente.");
 		this.setState({
-			mes: "0",
+			mes: "",
 			dias: Array.from(new Array(31), (x, i) => i + 1),
 			id: "",
 			rut: "",
@@ -821,10 +822,10 @@ export default class Pacientes extends Component {
 								<div className="col-lg-10" style={{ paddingTop: "30px", paddingBottom: "30px" }}>
 									<div className="tab-content" id="v-pills-tabContent">
 										<div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-											<Todos />
+											<Todos/>
 										</div>
 										<div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
-											<IngresarNuevo />
+											<IngresarNuevo/>
 										</div>
 										<div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
 											<BuscarPaciente />

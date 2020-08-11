@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react'
 import Administracion from './views/Administracion';
 import Pacientes from './views/Pacientes';
+import Personal from './views/Personal';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -59,7 +60,7 @@ class App extends Component {
                 <Pacientes />
               </Route>
               <Route path="/personal">
-                <Administracion />
+                <Personal />
               </Route>
               <Route path="/">
                 <Administracion />
