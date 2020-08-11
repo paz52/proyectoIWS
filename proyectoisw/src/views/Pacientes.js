@@ -18,7 +18,7 @@ class Todos extends Component {
 	obtenerPacientes() {
 		pacienteService.obtenerTodo().then((response) => {
 			this.setState({
-			  listaPacientes: response.status === 200 ? response.data : [],
+			  listaPacientes: response.status === 200 ? response.data.sort((a,b) => (a.id > b.id) ? 1 : ((b.id> a.id) ? -1 : 0)) : [],
 			});
 		});
 	}
@@ -721,7 +721,7 @@ class ActualizarPaciente extends Component {
 						</div>
 						<div className="form-group col-md-4">
 							<label for="inputApellidos">Apellidos</label>
-							<input type="text"  value={this.state.apellido}  className="form-control" id="inputApellidos"></input>
+							<input type="text" onChange={this.handleChangeInput} value={this.state.apellido}  className="form-control" id="inputApellidos"></input>
 						</div>
 					</div>
 					<div className="form-row">
@@ -797,6 +797,15 @@ class ActualizarPaciente extends Component {
 }
 
 export default class Pacientes extends Component {
+	constructor(){
+		super();
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick(e) {
+		window.location.reload();
+	}
+
 	render() {
 		return (
 			<section className="material">
@@ -813,7 +822,7 @@ export default class Pacientes extends Component {
 							<div className="row">
 								<div className="col-lg-2 ">
 									<div className="nav flex-column nav-pills nav-material2 stiky-list" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-										<a className="link-material nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Ver todos los pacientes</a>
+										<a  onClick={this.handleClick} className="link-material nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Ver todos los pacientes</a>
 										<a className="link-material nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Ingresar nuevo paciente</a>
 										<a className="link-material nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Buscar datos de un paciente</a>
 										<a className="link-material nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Modificar datos de un paciente</a>
