@@ -26,7 +26,7 @@ class Todos extends Component {
 	obtenerPacientesEstado(estado) {
 		pacienteService.obtenerTodo().then((response) => {
 			this.setState({
-			  listaPacientes: response.status === 200 ? response.data.filter(data => data.estado == estado) : [],
+			  listaPacientes: response.status === 200 ? response.data.filter(data => data.estado == estado).sort((a,b) => (a.id > b.id) ? 1 : ((b.id> a.id) ? -1 : 0)) : [],
 			});
 		});
 	}
@@ -34,7 +34,7 @@ class Todos extends Component {
 	obtenerPacientesDiagnostico(diagnostico) {
 		pacienteService.obtenerTodo().then((response) => {
 			this.setState({
-			  listaPacientes: response.status === 200 ? response.data.filter(data => data.diagnostico == diagnostico) : [],
+			  listaPacientes: response.status === 200 ? response.data.filter(data => data.diagnostico == diagnostico).sort((a,b) => (a.id > b.id) ? 1 : ((b.id> a.id) ? -1 : 0)) : [],
 			});
 		});
 	}
@@ -336,9 +336,6 @@ class IngresarNuevo extends Component {
 								<option selected value="seleccionar">Seleccionar...</option>
 								<option value="0">No se encuentra en el hospital</option>
 								<option value="1">En espera</option>
-								<option value="2">En quimioterapia</option>
-								<option value="3">En pabellón </option>
-								<option value="4">En recuperación </option>
 							</select>
 						</div>
 						<div className="form-group col-md-4">
@@ -503,6 +500,7 @@ class ActualizarPaciente extends Component {
 		super();
 		this.state = {
 			dias: Array.from(new Array(31), (x, i) => i + 1), 
+			estado: "",
 			id: "",
 			rut: "",
 			nombre: "",
@@ -517,6 +515,7 @@ class ActualizarPaciente extends Component {
 			programa_salud: "",
 			fecha_nacimiento: "",
 			desactivar : true, 
+			desactivarEstado : false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleChangeDate = this.handleChangeDate.bind(this);
@@ -579,6 +578,9 @@ class ActualizarPaciente extends Component {
 		else if (e.target.id === "inputDiagnostico") {
 			this.setState({ diagnostico: e.target.value });
 		}
+		else if (e.target.id === "inputEstado") {
+			this.setState({ estado: e.target.value });
+		}
 	}
 
 	handleClickBuscar() {
@@ -599,7 +601,8 @@ class ActualizarPaciente extends Component {
 					desactivar: false,
 					anio: response.data.res.fecha_nacimiento.slice(0,4),
 					mes: response.data.res.fecha_nacimiento.slice(5,7),
-					dia: response.data.res.fecha_nacimiento.slice(8,10)
+					dia: response.data.res.fecha_nacimiento.slice(8,10),
+					desactivarEstado: (response.data.res.estado == 2 || response.data.res.estado == 3 || response.data.res.estado == 4) ? true : false
 				});
 			}
 			else{
@@ -616,7 +619,9 @@ class ActualizarPaciente extends Component {
 					fecha_ingreso: "",
 					diagnostico: "",
 					programa_salud: "",
-					desactivar: true
+					desactivar: true, 
+					estado: "",
+					desactivarEstado: false,
 				});
 			};
 		});
@@ -634,9 +639,10 @@ class ActualizarPaciente extends Component {
 			diagnostico: this.state.diagnostico,
 			programa_salud: this.state.programa_salud,
 			fecha_nacimiento: diaFixed+'/'+this.state.mes+'/'+this.state.anio, 
-			formato_fecha : "dd/MM/yyyy"
+			formato_fecha : "dd/MM/yyyy",
 		};
 		pacienteService.actualizarDatos(data, parseInt(this.state.id));
+		pacienteService.actualizarEstado(parseInt(this.state.id), parseInt(this.state.estado));
 		alert("Paciente actualizado exitosamente.");
 		this.setState({
 			mes: "0",
@@ -652,7 +658,9 @@ class ActualizarPaciente extends Component {
 			antecedentes_medicos: "",
 			diagnostico: "",
 			programa_salud: "",
-			desactivar: true
+			desactivar: true, 
+			estado:"",
+			desactivarEstado: false
 		});
 	}
 
@@ -673,7 +681,9 @@ class ActualizarPaciente extends Component {
 			antecedentes_medicos: "",
 			diagnostico: "",
 			programa_salud: "",
-			desactivar: true
+			desactivar: true, 
+			estado: "", 
+			desactivarEstado: false
 		});
 	}
 
@@ -780,6 +790,14 @@ class ActualizarPaciente extends Component {
 							<input type="text" onChange={this.handleChangeInput} value={this.state.programa_salud} placeholder={this.state.programa_salud} className="form-control" id="inputSalud"></input>
 						</div>
 						<div className="form-group col-md-4">
+							<label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Estado</label>
+							<select disabled={this.state.desactivarEstado} value={this.state.estado}  onChange={this.handleChangeInput} id="inputEstado" className="form-control">
+								<option selected value="seleccionar">Seleccionar...</option>
+								<option value="0">No se encuentra en el hospital</option>
+								<option value="1">En espera</option>
+							</select>
+						</div>
+						<div className="form-group col-md-4">
 							<label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Diagnóstico</label>
 							<select onChange={this.handleChangeInput} id="inputDiagnostico" value={this.state.diagnostico}  className="form-control">
 								<option selected value="seleccionar">Seleccionar...</option>
@@ -822,7 +840,7 @@ export default class Pacientes extends Component {
 							<div className="row">
 								<div className="col-lg-2 ">
 									<div className="nav flex-column nav-pills nav-material2 stiky-list" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-										<a  onClick={this.handleClick} className="link-material nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Ver todos los pacientes</a>
+										<a onClick={this.handleClick} className="link-material nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Ver todos los pacientes</a>
 										<a className="link-material nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Ingresar nuevo paciente</a>
 										<a className="link-material nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Buscar datos de un paciente</a>
 										<a className="link-material nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Modificar datos de un paciente</a>

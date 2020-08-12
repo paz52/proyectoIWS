@@ -220,13 +220,40 @@ class Actividades extends Component{
 	}
 }
 
+class Boton extends Component{
+	render(){
+		return(
+			<div className="container-fluid" style={{paddingBottom:"100px",paddingTop:"90px",backgroundColor:"#e9ecef"}}>                        
+				<div className="container ">
+					<h2 className="display-4" style={{fontSize:"3rem"}}>Administración de <strong>{this.props.nombre}</strong></h2>
+					<hr></hr>
+					<div className="row informacion1">
+						<div className="d-none d-lg-block col-md-3  imagen-robot" style={{paddingLeft:"55px"}}>
+							<i className={this.props.icono +" fa-9x"}></i>
+						</div>
+						<div className="col-md-9">
+							<div className="container ">
+								<h2 className="display-4" style={{fontSize:"2.2rem"}}>Sistema de Administración de {this.props.nombre}</h2>
+								<p>Administración y asignación de personal y pacientes.</p>
+								<div style={{marginTop:"0px"}}>
+									<a href={this.props.enlace}><button type="button" className="btn btn-info text-white">Ir al sistema <i className="fas fa-chevron-right icono"></i> </button></a>
+								</div>
+							</div>
+						</div>
+					</div>  
+				</div>
+			</div>
+		)
+	}
+}
+
 const dataMaterial = {
 	descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean finibus purus velit, sed suscipit neque maximus eget. Sed malesuada tempor tellus ut pretium. Etiam lorem ante, convallis in est eget, tempor molestie felis. Maecenas vitae risus vestibulum, rhoncus velit at, tincidunt diam. Suspendisse auctor eget sapien nec convallis. Aliquam erat volutpat.",
 	url_imagen:"./fondomaterial.jpg", 
 };
 
 
-export default class Material extends Component{
+export default class Administracion extends Component{
     render(){
         return(
         	<section className="material">
@@ -239,12 +266,12 @@ export default class Material extends Component{
 				</div>
 				<ul className="nav nav-material nav-pills nav-fill mb-3 bg-light" >
                     <li className="nav-item niveles">
-                        <a className="nav-link rounded-0 text-white bg-info active"id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                        <a className="nav-link rounded-0 text-white bg-info "id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="false">
                         Pabellones
                         </a>
                     </li>
                     <li className="nav-item niveles">
-                        <a className="nav-link rounded-0 text-white bg-info" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                        <a className="nav-link rounded-0 text-white bg-info active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">
                        Salas de Quimioterapia
                         </a>
                     </li>
@@ -255,72 +282,19 @@ export default class Material extends Component{
                     </li>
                 </ul>
 				<div className="tab-content " style={{marginTop: "-16px"}}>
-                    <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div className="tab-pane fade " id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+						<Boton nombre="Pabellones" icono="fas fa-x-ray" enlace="https://front-pabellones.herokuapp.com" />
+					</div>	
+					
+					<div className="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-contact-tab">
 						<div className="container">
-							<div className="row">
-								<div className="col-lg-2 ">
-									<div className="nav flex-column nav-pills nav-material2 stiky-list" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
-										<a className="link-material nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home2" role="tab" aria-controls="v-pills-home" aria-selected="true">Asignar Paciente</a>
-										<a className="link-material nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile2" role="tab" aria-controls="v-pills-profile" aria-selected="false">Ver Asignaciones</a>
-										<a className="link-material nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages2" role="tab" aria-controls="v-pills-messages" aria-selected="false">Ver Salas</a>
-										<a className="link-material nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings2" role="tab" aria-controls="v-pills-settings" aria-selected="false">Asignar Personal</a>
-									</div>
-								</div>
-								<div className="col-lg-10" style={{paddingTop:"30px",paddingBottom:"30px"}}>
-									<div className="tab-content" id="v-pills-tabContent">
-										<div className="tab-pane fade show active" id="v-pills-home2" role="tabpanel" aria-labelledby="v-pills-home-tab">
-											
-										</div>
-										<div className="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-home-tab">
-											
-										</div>
-										<div className="tab-pane fade" id="v-pills-messages2" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-											<Recomendaciones />
-										</div>
-										
-										<div className="tab-pane fade" id="v-pills-settings2" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-											<Actividades />
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>	
-					</div>
-					<div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-contact-tab">
-						<div className="container">
-								<div className="row">
-									<div className="col-lg-2 ">
-										<div className="nav flex-column nav-pills nav-material2 stiky-list" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-											<a className="link-material nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Asignar Paciente</a>
-											<a className="link-material nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Ver Asignaciones</a>
-											<a className="link-material nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Ver Salas</a>
-											<a className="link-material nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Asignar Personal</a>
-										</div>
-									</div>
-									<div className="col-lg-10" style={{paddingTop:"30px",paddingBottom:"30px"}}>
-										<div className="tab-content" id="v-pills-tabContent">
-											<div className="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-												sxxx
-											</div>
-											<div className="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
-												ssss
-											</div>
-											<div className="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-												holiiiis
-											</div>
-											
-											<div className="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-												xd
-											</div>
-										</div>
-									</div>
-								</div>
+								xd
 							</div>	
 						</div>
                     <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        3
+						<Boton nombre="Salas de Recuperación" icono="fas fa-procedures" enlace="https://sector-recuperaciones.herokuapp.com" />
                     </div>
-                </div> 	
+                </div> 
 			
         	</section>
         )
